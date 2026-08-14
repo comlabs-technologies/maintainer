@@ -1,11 +1,19 @@
 import { SignIn } from "@clerk/nextjs";
 import { ContinueWithGitHub } from "@/components/auth/continue-with-github";
+import { MissingConfig } from "@/components/setup/missing-config";
+import { isClerkConfigured } from "@/lib/env";
+
+export const dynamic = "force-dynamic";
 
 export default async function SignInPage({
   params,
 }: {
   params: Promise<{ "sign-in"?: string[] }>;
 }) {
+  if (!isClerkConfigured()) {
+    return <MissingConfig missing={["clerk"]} />;
+  }
+
   const segments = (await params)["sign-in"];
   const extraStep = Boolean(segments && segments.length > 0);
 

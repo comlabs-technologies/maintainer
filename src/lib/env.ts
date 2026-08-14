@@ -32,6 +32,31 @@ export function getEnv(): AppEnv {
   return cached;
 }
 
+function isPlaceholder(value: string | undefined): boolean {
+  if (!value) return true;
+  const normalized = value.toLowerCase();
+  return (
+    normalized.includes("replace_me") ||
+    normalized.includes("placeholder") ||
+    normalized === "pk_test_" ||
+    normalized === "sk_test_"
+  );
+}
+
+export function isClerkConfigured(): boolean {
+  const publishable = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  const secret = process.env.CLERK_SECRET_KEY;
+  if (isPlaceholder(publishable) || isPlaceholder(secret)) return false;
+  return Boolean(
+    publishable?.startsWith("pk_") && secret?.startsWith("sk_"),
+  );
+}
+
+export function isDatabaseConfigured(): boolean {
+  const url = process.env.DATABASE_URL;
+  return Boolean(url && !isPlaceholder(url) && url.startsWith("postgres"));
+}
+
 export function isGithubAppConfigured(): boolean {
   const env = getEnv();
   return Boolean(env.GITHUB_APP_ID && env.GITHUB_APP_PRIVATE_KEY);
