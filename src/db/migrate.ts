@@ -1,0 +1,20 @@
+import postgres from "postgres";
+import { drizzle } from "drizzle-orm/postgres-js";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+
+async function main() {
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    throw new Error("DATABASE_URL is required to run migrations");
+  }
+  const client = postgres(url, { max: 1 });
+  const db = drizzle(client);
+  await migrate(db, { migrationsFolder: "./drizzle" });
+  await client.end();
+  console.log("Migrations complete");
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
