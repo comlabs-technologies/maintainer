@@ -1,7 +1,21 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export default clerkMiddleware(async (auth, request) => {
+function clerkKeysPresent(): boolean {
+  const publishable = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? "";
+  const secret = process.env.CLERK_SECRET_KEY ?? "";
+  if (!publishable || !secret) return false;
+  if (
+    publishable.includes("replace_me") ||
+    secret.includes("replace_me") ||
+    secret.includes("placeholder")
+  ) {
+    return false;
+  }
+  return publishable.startsWith("pk_") && secret.startsWith("sk_");
+}
+
+const clerkProxy = clerkMiddleware(async (auth, request) => {
   const { pathname } = request.nextUrl;
   const isPublic =
     pathname === "/" ||
@@ -15,6 +29,12 @@ export default clerkMiddleware(async (auth, request) => {
 
   return NextResponse.next();
 });
+
+export default clerkKeysPresent()
+  ? clerkProxy
+  : function proxy() {
+      return NextResponse.next();
+    };
 
 export const config = {
   matcher: [

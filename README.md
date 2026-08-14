@@ -117,6 +117,16 @@ Primary routes:
 - `/app/activity`
 - `/app/settings`
 
-## Environment variables
+## Deployment
 
-See `.env.example`.
+Vercel needs at least:
+
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+CLERK_SECRET_KEY
+DATABASE_URL
+```
+
+Without those, the site still loads. `/` shows the product landing page. `/sign-in` and `/app` show which variables are missing instead of a 500.
+
+`DATABASE_URL` must be a hosted Postgres URL (Neon, Vercel Postgres, or similar). `localhost` will not work on Vercel. After setting variables, redeploy.

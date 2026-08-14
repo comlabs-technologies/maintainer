@@ -1,8 +1,21 @@
-import { Show } from "@clerk/nextjs";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 import { buttonClass } from "@/components/ui/button";
+import { isClerkConfigured } from "@/lib/env";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  let signedIn = false;
+  if (isClerkConfigured()) {
+    try {
+      const { userId } = await auth();
+      signedIn = Boolean(userId);
+    } catch {
+      signedIn = false;
+    }
+  }
+
   return (
     <main className="mx-auto flex min-h-full max-w-[640px] flex-col justify-center px-6 py-24">
       <p className="text-[14px] font-medium tracking-[-0.02em]">◇ Maintainer</p>
@@ -16,18 +29,12 @@ export default function HomePage() {
         pull requests before integrations fail.
       </p>
       <div className="mt-8">
-        <Show
-          when="signed-in"
-          fallback={
-            <Link href="/sign-in" className={buttonClass("primary")}>
-              Get started
-            </Link>
-          }
+        <Link
+          href={signedIn ? "/app/repositories" : "/sign-in"}
+          className={buttonClass("primary")}
         >
-          <Link href="/app/repositories" className={buttonClass("primary")}>
-            Open Maintainer
-          </Link>
-        </Show>
+          {signedIn ? "Open Maintainer" : "Get started"}
+        </Link>
       </div>
       <p className="mt-16 text-[13px] text-muted">
         Works with Stripe · OpenAI · Anthropic
