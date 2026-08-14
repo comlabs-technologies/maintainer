@@ -21,34 +21,34 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <ClerkProvider
-      appearance={{
-        variables: {
-          colorPrimary: "#171717",
-          colorForeground: "#171717",
-          colorBackground: "#ffffff",
-          colorInput: "#ffffff",
-          colorInputForeground: "#171717",
-          borderRadius: "8px",
-          fontFamily: "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
-        },
-        elements: {
-          card: "shadow-none border border-[#EAEAEA] rounded-[10px]",
-          headerTitle: "text-[15px] font-medium",
-          headerSubtitle: "text-[14px] text-[#666666]",
-          socialButtonsBlockButton:
-            "border border-[#EAEAEA] hover:bg-[#FAFAFA]",
-        },
-      }}
+    <html
+      lang="en"
+      className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <html
-        lang="en"
-        className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
-      >
-        <body className="min-h-full bg-white font-sans text-foreground">
+      <body className="min-h-full bg-white font-sans text-foreground">
+        <ClerkProvider
+          appearance={{
+            variables: {
+              colorPrimary: "#171717",
+              colorForeground: "#171717",
+              colorBackground: "#ffffff",
+              colorInput: "#ffffff",
+              colorInputForeground: "#171717",
+              borderRadius: "8px",
+              fontFamily: "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+            },
+            elements: {
+              card: "shadow-none border border-[#EAEAEA] rounded-[10px]",
+              headerTitle: "text-[15px] font-medium",
+              headerSubtitle: "text-[14px] text-[#666666]",
+              socialButtonsBlockButton:
+                "border border-[#EAEAEA] hover:bg-[#FAFAFA]",
+            },
+          }}
+        >
           {children}
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }
