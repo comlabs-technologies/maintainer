@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { Show } from "@clerk/nextjs";
 import Link from "next/link";
 import { buttonClass } from "@/components/ui/button";
 
@@ -16,16 +16,18 @@ export default function HomePage() {
         pull requests before integrations fail.
       </p>
       <div className="mt-8">
-        <SignedOut>
-          <Link href="/sign-in" className={buttonClass("primary")}>
-            Get started
-          </Link>
-        </SignedOut>
-        <SignedIn>
+        <Show
+          when="signed-in"
+          fallback={
+            <Link href="/sign-in" className={buttonClass("primary")}>
+              Get started
+            </Link>
+          }
+        >
           <Link href="/app/repositories" className={buttonClass("primary")}>
             Open Maintainer
           </Link>
-        </SignedIn>
+        </Show>
       </div>
       <p className="mt-16 text-[13px] text-muted">
         Works with Stripe · OpenAI · Anthropic
