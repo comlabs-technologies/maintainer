@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --surface: #fafafa;
+  --subtle: #f7f7f7;
+  --border: #eaeaea;
+  --secondary: #666666;
+  --muted: #999999;
+  --success: #0f7b3b;
+  --success-bg: #f3faf6;
+  --success-border: #cdebd8;
+  --warning: #9a6700;
+  --warning-bg: #fbf7ef;
+  --warning-border: #ead9b2;
+  --danger: #b42318;
+  --danger-bg: #fdf4f3;
+  --danger-border: #f0c9c5;
+  --link: #155dfc;
+  --link-bg: #f3f7ff;
+  --link-border: #d6e2fb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-success-border: var(--success-border);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-border: var(--warning-border);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-border: var(--danger-border);
+  --color-link: var(--link);
+  --color-link-bg: var(--link-bg);
+  --color-link-border: var(--link-border);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: #ececec;
+}
